@@ -15,13 +15,17 @@ class HomeViewController: UIViewController {
   @IBOutlet weak var Display: UITextView!
   @IBOutlet weak var ResultText: UILabel!
     
+  @IBAction func Evaluate() {
+    let mathExpression = NSExpression(format: Display.text)
+    let mathValue = mathExpression.expressionValue(with: nil, context: nil) as! Int
+    ResultText.text = String(describing: mathValue)
+  }
   @IBAction func Clear() {
     Display.text.removeAll()
     ResultText.text?.removeAll()
   }
   @IBAction func Delete() {
     Display.text.characters.removeLast(1)
-    ResultText.text?.characters.removeLast(1)
   }
 
   @IBAction func toggleSign() {
@@ -32,10 +36,11 @@ class HomeViewController: UIViewController {
     let numString = sender.currentTitle!
     Display.text.append(numString)
     
-    ResultText.text?.append(numString)
   }
   @IBAction func appendOperator(_ sender: UIButton) {
-    
+    let numString = sender.currentTitle!
+    Display.text.append(numString)
+    //change 
   }
   
     override func viewDidLoad() {

@@ -121,7 +121,7 @@
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0P-YP-ZIf">
                                                         <rect key="frame" x="281.5" y="0.0" width="93.5" height="97.5"/>
-                                                        <state key="normal" title="X"/>
+                                                        <state key="normal" title="*"/>
                                                         <connections>
                                                             <action selector="appendOperator:" destination="deE-6y-UAc" eventType="touchUpInside" id="OYa-O2-nT1"/>
                                                         </connections>
@@ -218,6 +218,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PpM-yQ-yBm">
                                                         <rect key="frame" x="281.5" y="0.0" width="93.5" height="98"/>
                                                         <state key="normal" title="="/>
+                                                        <connections>
+                                                            <action selector="Evaluate" destination="deE-6y-UAc" eventType="touchUpInside" id="Wse-8C-kjU"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>

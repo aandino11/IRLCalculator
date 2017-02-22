@@ -56,7 +56,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="187.5" height="30"/>
                                                 <state key="normal" title="Help"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfV-XR-PNo">
+                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="250" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfV-XR-PNo">
                                                 <rect key="frame" x="187.5" y="0.0" width="187.5" height="30"/>
                                                 <state key="normal" title="Delete"/>
                                                 <connections>
@@ -243,6 +243,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="DeleteButton" destination="gfV-XR-PNo" id="mD2-w9-KiG"/>
                         <outlet property="Display" destination="XnH-0K-J8f" id="OeH-l8-VIt"/>
                         <outlet property="ResultText" destination="Hh4-Jl-4kE" id="oKn-gP-h4Y"/>
                     </connections>

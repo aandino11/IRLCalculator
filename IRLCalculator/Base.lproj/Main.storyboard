@@ -81,6 +81,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xt1-U7-5y4">
                                                         <rect key="frame" x="94" y="0.0" width="93.5" height="98"/>
                                                         <state key="normal" title="()"/>
+                                                        <connections>
+                                                            <action selector="appendParen:" destination="deE-6y-UAc" eventType="touchUpInside" id="WBQ-ml-eh2"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5B-md-SG7">
                                                         <rect key="frame" x="187.5" y="0.0" width="94" height="98"/>

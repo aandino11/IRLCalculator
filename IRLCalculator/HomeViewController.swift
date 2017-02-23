@@ -11,6 +11,34 @@ import UIKit
 class HomeViewController: UIViewController {
   var result = 0
   var stack = [String]()
+  var numOpenParen = 0
+  let digitSet = CharacterSet.decimalDigits
+  
+  var hasText: Bool {
+    get {
+      return !Display.text.isEmpty
+    }
+  }
+		
+  var lastcharNum: Bool {
+    get {
+      return hasText ? digitSet.contains(Display.text.unicodeScalars.last!) : false
+    }
+  }
+  
+  var lastcharopenParen: Bool {
+    get {
+      return hasText ? Display.text.characters.last == "(" : false
+    }
+  }
+  
+  var lastcharocloseParen: Bool {
+    get {
+      return hasText ? Display.text.characters.last == ")" : false
+    }
+  }
+  
+  
 
   @IBOutlet weak var Display: UITextView!
   @IBOutlet weak var ResultText: UILabel!
@@ -28,13 +56,29 @@ class HomeViewController: UIViewController {
   }
   @IBAction func Delete() {
     Display.text.characters.removeLast(1)
-    if Display.text.isEmpty {
+    if !hasText {
       DeleteButton.isEnabled = false
     }
   }
 
   @IBAction func toggleSign() {
     
+  }
+  
+  @IBAction func appendParen(_ sender: UIButton) {
+    
+    if hasText && (lastcharNum || lastcharocloseParen) {
+      if numOpenParen > 0 {
+        Display.text.append(")")
+        numOpenParen -= 1
+      } else {
+       Display.text.append("*(")
+        numOpenParen += 1
+      }
+    } else {
+      Display.text.append("(")
+      numOpenParen += 1
+    }
   }
   
   @IBAction func appendNumber(_ sender: UIButton) {
@@ -45,9 +89,8 @@ class HomeViewController: UIViewController {
   }
   @IBAction func appendOperator(_ sender: UIButton) {
     let numString = sender.currentTitle!
-    let digitSet = CharacterSet.decimalDigits
     
-    if digitSet.contains(Display.text.unicodeScalars.last!) {
+    if hasText && (lastcharNum || lastcharocloseParen) {
       Display.text.append(numString)
     }
   }
@@ -63,8 +106,5 @@ class HomeViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-  
-
 }
 

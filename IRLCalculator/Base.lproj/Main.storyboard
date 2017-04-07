@@ -83,6 +83,7 @@
                                                         <state key="normal" title="()"/>
                                                         <connections>
                                                             <action selector="appendParen:" destination="deE-6y-UAc" eventType="touchUpInside" id="WBQ-ml-eh2"/>
+                                                            <action selector="someAction:forEvent:" destination="deE-6y-UAc" eventType="touchUpInside" id="DND-r2-rgo"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5B-md-SG7">
@@ -203,6 +204,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VF2-WF-Os4">
                                                         <rect key="frame" x="0.0" y="0.0" width="94" height="98"/>
                                                         <state key="normal" title="."/>
+                                                        <connections>
+                                                            <action selector="appendDecimal:" destination="deE-6y-UAc" eventType="touchUpInside" id="ewA-eZ-pve"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYR-kb-kzI">
                                                         <rect key="frame" x="94" y="0.0" width="93.5" height="98"/>
@@ -249,6 +253,7 @@
                         <outlet property="DeleteButton" destination="gfV-XR-PNo" id="mD2-w9-KiG"/>
                         <outlet property="Display" destination="XnH-0K-J8f" id="OeH-l8-VIt"/>
                         <outlet property="ResultText" destination="Hh4-Jl-4kE" id="oKn-gP-h4Y"/>
+                        <outlet property="button8" destination="Who-wi-SVe" id="kcc-oY-4lY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eys-Uc-6wr" userLabel="First Responder" sceneMemberID="firstResponder"/>

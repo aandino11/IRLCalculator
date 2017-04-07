@@ -6,37 +6,54 @@
 //  Copyright © 2016 Alvin  Andino . All rights reserved.
 //
 
+
 import UIKit
 
 class HomeViewController: UIViewController {
-  var result = 0
-  var stack = [String]()
+  var numBuffer = ""
   var numOpenParen = 0
+  var decimalInNum = false
+  var doesnumhavesign = false
+  var userIsInTheMiddleOFTyping = false
+  private var calcModel = CalculatorModel()
+  
+  
   let digitSet = CharacterSet.decimalDigits
   
   var hasText: Bool {
-    get {
-      return !Display.text.isEmpty
-    }
+    return !Display.text.isEmpty
   }
 		
   var lastcharNum: Bool {
-    get {
-      return hasText ? digitSet.contains(Display.text.unicodeScalars.last!) : false
-    }
+    
+    return hasText ? digitSet.contains(Display.text.unicodeScalars.last!) : false
+    
   }
   
   var lastcharopenParen: Bool {
-    get {
-      return hasText ? Display.text.characters.last == "(" : false
-    }
+    return hasText ? Display.text.characters.last == "(" : false
+    
   }
   
   var lastcharocloseParen: Bool {
+    return hasText ? Display.text.characters.last == ")" : false
+    
+  }
+  
+  var lastcharoperator: Bool {
+    //change
+    return hasText ? ["+", "-", "/", "*"].contains(String(describing: Display.text.characters.last!)) : false
+  }
+  
+  var displayValue: Double {
     get {
-      return hasText ? Display.text.characters.last == ")" : false
+      return Double(numBuffer)!
+    }
+    set {
+      numBuffer = String(newValue)
     }
   }
+		
   
   
 
@@ -45,28 +62,57 @@ class HomeViewController: UIViewController {
   @IBOutlet weak var DeleteButton: UIButton!
     
   @IBAction func Evaluate() {
-    let mathExpression = NSExpression(format: Display.text)
-    let mathValue = mathExpression.expressionValue(with: nil, context: nil) as! Float
+    //let mathExpression = NSExpression(format: Display.text)
+    //let mathValue = mathExpression.expressionValue(with: nil, context: nil) as! Float
     ResultText.text = String(describing: mathValue)
   }
   @IBAction func Clear() {
-    Display.text.removeAll()
+    //Display.text.removeAll()
     ResultText.text?.removeAll()
+    numBuffer.removeAll()
     DeleteButton.isEnabled = false
+    decimalInNum = false
   }
   @IBAction func Delete() {
-    Display.text.characters.removeLast(1)
+    let char = Display.text.characters.removeLast()
+    numBuffer.characters.removeLast()
+    if char == "." {
+      decimalInNum = false
+    }
     if !hasText {
       DeleteButton.isEnabled = false
     }
   }
 
-  @IBAction func toggleSign() {
+  @IBAction func toggleSign() { //working
+    if !hasText {
+      Display.text.append("(-")
+      numBuffer.append("(-")
+      
+    }
     
   }
   
+  @IBAction func appendDecimal(_ sender: UIButton) {
+    if !hasText || lastcharopenParen || lastcharoperator {
+      Display.text.append("0.")
+      decimalInNum = true
+      DeleteButton.isEnabled = true
+    } else if lastcharocloseParen {
+      Display.text.append("*0.")
+      decimalInNum = true
+      DeleteButton.isEnabled = true
+    } else if lastcharNum && !decimalInNum {
+      Display.text.append(".")
+      numBuffer.append(".")
+      decimalInNum = true
+      DeleteButton.isEnabled = true
+      
+    }
+  }
+  
   @IBAction func appendParen(_ sender: UIButton) {
-    
+    //dont append on decimal
     if hasText && (lastcharNum || lastcharocloseParen) {
       if numOpenParen > 0 {
         Display.text.append(")")
@@ -79,24 +125,40 @@ class HomeViewController: UIViewController {
       Display.text.append("(")
       numOpenParen += 1
     }
+    decimalInNum = false
+    DeleteButton.isEnabled = true
+    numBuffer.removeAll()
   }
   
   @IBAction func appendNumber(_ sender: UIButton) {
     let numString = sender.currentTitle!
-    Display.text.append(numString)
+    if userIsInTheMiddleOFTyping {
+      Display.text.append(numString)
+      numBuffer.append(numString)
+    } else {
+      Display.text = numString
+      numBuffer = numString
+      userIsInTheMiddleOFTyping = true
+    }
     DeleteButton.isEnabled = true
     
   }
   @IBAction func appendOperator(_ sender: UIButton) {
-    let numString = sender.currentTitle!
-    
-    if hasText && (lastcharNum || lastcharocloseParen) {
-      Display.text.append(numString)
+    if userIsInTheMiddleOFTyping {
+      calcModel.setOperand(displayValue)
+      userIsInTheMiddleOFTyping = false
     }
+    
+    let operatorString = sender.currentTitle!
+    calcModel.performOperation(operatorString)
+    if let result = calcModel.result {
+      displayValue = result
+    }
+    
   }
   
     override func viewDidLoad() {
-        super.viewDidLoad()
+      super.viewDidLoad()
       Display.text.removeAll()
       ResultText.text?.removeAll()
         // Do any additional setup after loading the view, typically from a nib.

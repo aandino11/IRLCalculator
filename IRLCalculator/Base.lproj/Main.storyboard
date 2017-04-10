@@ -83,7 +83,6 @@
                                                         <state key="normal" title="()"/>
                                                         <connections>
                                                             <action selector="appendParen:" destination="deE-6y-UAc" eventType="touchUpInside" id="WBQ-ml-eh2"/>
-                                                            <action selector="someAction:forEvent:" destination="deE-6y-UAc" eventType="touchUpInside" id="DND-r2-rgo"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5B-md-SG7">
@@ -109,11 +108,11 @@
                                                             <action selector="appendNumber:" destination="deE-6y-UAc" eventType="touchUpInside" id="ozN-3y-rXA"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Who-wi-SVe">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msQ-Ft-fha" userLabel="8">
                                                         <rect key="frame" x="94" y="0.0" width="93.5" height="97.5"/>
                                                         <state key="normal" title="8"/>
                                                         <connections>
-                                                            <action selector="appendNumber:" destination="deE-6y-UAc" eventType="touchUpInside" id="FgH-qj-7hb"/>
+                                                            <action selector="appendNumber:" destination="deE-6y-UAc" eventType="touchUpInside" id="AmG-7y-OKy"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BEv-gH-vd9">
@@ -253,7 +252,6 @@
                         <outlet property="DeleteButton" destination="gfV-XR-PNo" id="mD2-w9-KiG"/>
                         <outlet property="Display" destination="XnH-0K-J8f" id="OeH-l8-VIt"/>
                         <outlet property="ResultText" destination="Hh4-Jl-4kE" id="oKn-gP-h4Y"/>
-                        <outlet property="button8" destination="Who-wi-SVe" id="kcc-oY-4lY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eys-Uc-6wr" userLabel="First Responder" sceneMemberID="firstResponder"/>

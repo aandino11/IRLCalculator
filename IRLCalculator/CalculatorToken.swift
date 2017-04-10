@@ -36,9 +36,36 @@ public struct CalculatorToken: CustomStringConvertible {
     }
   }
   
+  var isCloseBracket: Bool {
+    switch tokenType {
+    case .closeBracket:
+      return true
+    default:
+      return false
+    }
+  }
+  
   var isOperator: Bool {
     switch tokenType {
     case .Operator(_):
+      return true
+    default:
+      return false
+    }
+  }
+  
+  var isConstant: Bool {
+    switch tokenType {
+    case .constant(_):
+      return true
+    default:
+      return false
+    }
+  }
+  
+  var isOperand: Bool {
+    switch tokenType {
+    case .operand(_):
       return true
     default:
       return false
@@ -104,10 +131,19 @@ public enum OperatorType: CustomStringConvertible {
   case multiply
   case percent
   case exponent
+  case sqrt
+  case cos
   
+  public var bracketValue: Int {
+    switch self {
+    case .sqrt, .cos:
+      return 1
+    default:
+      return 0
+    }
+  }
   
-  
-  public var description: String {
+  public var description: String { // change to dict?
     switch self {
     case .add:
       return "+"
@@ -121,6 +157,10 @@ public enum OperatorType: CustomStringConvertible {
       return "%"
     case .exponent:
       return "^"
+    case .sqrt:
+      return "√(" //chane to no paren?
+    case .cos:
+      return "cos("
     }
   }
 }

@@ -9,8 +9,20 @@
 import Foundation
 
 struct CalculatorModel {
+  private enum State {
+    case editingOperand(operand: Double)
+    case notEditingOperand
+    
+    mutating func updateOperand(newValue: Double) {
+      self = .editingOperand(operand: newValue)
+    }
+  }
   
-  private var currentOperand: Double?
+  private var state: State = .notEditingOperand
+  
+  private var tokenExpression = [CalculatorToken]()
+  
+  var numOpenParen = 0
   
   public var result: Double? {
     if canHaveValidResult {
@@ -31,11 +43,6 @@ struct CalculatorModel {
     return toString
   }
   
-  private var tokenExpression = [CalculatorToken]()
-  
-  var numOpenParen = 0
-  
-    
   private mutating func addToken(_ calculatorToken: CalculatorToken) {
     tokenExpression.append(calculatorToken)
   }
@@ -44,7 +51,7 @@ struct CalculatorModel {
     if haveTokens && (lastTokenIsNum || lastTokenIsCloseParen) {
       addToken(CalculatorToken(operatorType: operatorType))
       numOpenParen += operatorType.bracketValue
-      currentOperand = nil
+      state = .notEditingOperand
       
     }
   }
@@ -54,16 +61,18 @@ struct CalculatorModel {
       addOperator(.multiply)
     }
     addToken(CalculatorToken(operand: operand))
-    currentOperand = operand
+    state = .editingOperand(operand: operand)
   }
   
   public mutating func appendToOperand(_ operand: Int) {
     if operand < 10 {
-      if currentOperand == nil {
+      switch state {
+      case .notEditingOperand:
         addOperand(Double(operand))
-      } else {
-        currentOperand = currentOperand!*10 + Double(operand)
-        lastToken = CalculatorToken(operand: currentOperand!)
+      case .editingOperand(let oldValue):
+        let newValue = oldValue*10 + Double(operand)
+        state.updateOperand(newValue: newValue)
+        lastToken = CalculatorToken(operand: newValue)
       }
     }
   }
@@ -100,18 +109,21 @@ struct CalculatorModel {
   
   public mutating func addAutoBracket() {
     //dont append on decimal
-    if haveTokens && (lastTokenIsNum || lastTokenIsCloseParen) {
-      if numOpenParen > 0 {
-        addCloseBracket()
-        
-      } else {
-        addOperator(.multiply)
-        addOpenBracket()
+    if haveTokens && !lastTokenIsOpenParen { //or last char a decimal
+      if lastTokenIsNum || lastTokenIsCloseParen {
+        if numOpenParen > 0 {
+          addCloseBracket()
+        } else {
+          addOperator(.multiply)
+          addOpenBracket()
       }
     } else {
       addOpenBracket()
     }
-    currentOperand = nil
+    state = .notEditingOperand
+    } else if !haveTokens {
+      addOpenBracket()
+    }
   }
   
   private mutating func addOpenBracket() {
@@ -124,7 +136,10 @@ struct CalculatorModel {
     numOpenParen -= 1
   }
   
-  
+  public mutating func clear() {
+    tokenExpression.removeAll()
+    state = .notEditingOperand
+  }
   /*
   public func delete() {
     /*
@@ -137,10 +152,6 @@ struct CalculatorModel {
      DeleteButton.isEnabled = false
      }
      */
-  }
-  
-  public func clear() {
-    //decimalInNum = false
   }
   
   private struct currentOperand: CustomStringConvertible {
@@ -179,7 +190,7 @@ struct CalculatorModel {
   }
   
   private var lastTokenIsCloseParen: Bool {
-    return haveTokens && lastToken!.isOpenBracket
+    return haveTokens && lastToken!.isCloseBracket
   }
   
   private var lastcharoperator: Bool {

@@ -31,24 +31,17 @@ class HomeViewController: UIViewController {
     "e" : M_E
   ]
   
-  var displayValue: Double {
-    get {
-      return Double(ResultText.text ?? "0")!
-    }
-    set {
-      ResultText.text = String(newValue)
-    }
-  }
-  
   private func updateUI() {
     Display.text = calcModel.expression
-    let hasText = !Display.text.isEmpty
-    DeleteButton.isEnabled = hasText
-    print(hasText)
-    
-    if let result = calcModel.result {
-      print(result)
-      displayValue = result
+    let displayHasText = !Display.text.isEmpty
+    DeleteButton.isEnabled = displayHasText
+    //print("do we have text \(displayHasText)")
+    if displayHasText { //better way to do this?
+      if let result = calcModel.result {
+        ResultText.text = String(result)
+      }
+    } else {
+      ResultText.text = ""
     }
   }
 		
@@ -60,7 +53,7 @@ class HomeViewController: UIViewController {
     
   }
   @IBAction func Clear() {
-    //calcModel.clear()
+    calcModel.clear()
   }
   @IBAction func Delete() {
     //calcModel.delete()
